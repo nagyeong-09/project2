@@ -1,1 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장애인 맞춤 구직 서비스 - 발표자료</title>
+<style>
+  :root {
+    --navy: #24384a;
+    --blue: #2f6690;
+    --blue-light: #e3edee;
+    --bg: #f4f6f7;
+    --border: #dde3e5;
+    --text: #263238;
+    --text-mute: #66787c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    font-family: 'Malgun Gothic', sans-serif;
+    background: #1a2733;
+    color: var(--text);
+    overflow: hidden;
+  }
 
+  .deck { position: relative; width: 100%; height: 100vh; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bg);
+    padding: 70px 100px;
+  }
+  .slide.active { display: flex; }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  h1 { font-size: 2.4rem; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 18px; }
+  h2 { font-size: 1.9rem; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 28px; }
+  .lead { font-size: 1.15rem; line-height: 1.7; color: var(--text-mute); max-width: 640px; }
+
+  /* Title slide */
+  .slide.title { background: var(--navy); align-items: flex-start; }
+  .slide.title .eyebrow { color: #7d9db0; }
+  .slide.title h1 { color: #fff; font-size: 3rem; margin-bottom: 20px; }
+  .slide.title .lead { color: #c3d2d9; font-size: 1.2rem; }
+  .slide.title .meta {
+    margin-top: 60px; font-size: 0.95rem; color: #8fa8b5;
+    border-top: 1px solid #3a5062; padding-top: 20px; width: 100%; max-width: 640px;
+  }
+
+  /* Two column layout */
+  .cols { display: flex; gap: 50px; align-items: flex-start; margin-top: 10px; }
+  .col { flex: 1; }
+  .col h3 { font-size: 1.05rem; color: var(--blue); font-weight: 700; margin-bottom: 12px; }
+  .col p { font-size: 0.98rem; line-height: 1.7; color: var(--text-mute); }
+
+  .card-box {
+    background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--blue);
+    border-radius: 2px; padding: 20px 22px; margin-top: 16px;
+  }
+  .card-box.problem { border-left-color: #b0413e; }
+  .card-box h4 { font-size: 0.98rem; color: var(--navy); font-weight: 700; margin-bottom: 8px; }
+  .card-box p { font-size: 0.9rem; color: var(--text-mute); line-height: 1.6; }
+
+  ul.plain { list-style: none; }
+  ul.plain li {
+    font-size: 1rem; line-height: 1.8; color: var(--text); padding-left: 22px; position: relative;
+  }
+  ul.plain li::before {
+    content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; background: var(--blue);
+  }
+
+  /* checkbox mock for feature slide */
+  .mock-check { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 0.95rem; }
+  .mock-box { width: 18px; height: 18px; border: 2px solid #b0bec5; border-radius: 3px; background: #fff; flex-shrink: 0; }
+  .mock-box.on { background: var(--blue); border-color: var(--blue); }
+  .mock-check.on { font-weight: 700; color: var(--navy); }
+
+  /* job card mock */
+  .job-mock {
+    background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--blue);
+    border-radius: 2px; padding: 18px; margin-top: 18px; max-width: 560px;
+  }
+  .job-mock h4 { font-size: 1rem; margin-bottom: 6px; color: var(--text); }
+  .job-mock .meta { font-size: 0.82rem; color: var(--text-mute); margin-bottom: 10px; }
+  .tag { display: inline-block; font-size: 0.72rem; padding: 3px 9px; border-radius: 3px; margin: 2px 4px 2px 0; }
+  .tag.type { background: var(--blue-light); color: var(--blue); border: 1px solid #c7dadc; }
+  .tag.support { background: #eef3ea; color: #4c6b3a; border: 1px solid #d6e3cd; }
+
+  .flow { display: flex; align-items: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+  .flow .step {
+    background: #fff; border: 1px solid var(--border); border-radius: 2px;
+    padding: 14px 18px; font-size: 0.92rem; color: var(--text);
+  }
+  .flow .arrow { color: var(--blue); font-size: 1.2rem; }
+
+  .compare { display: flex; gap: 24px; margin-top: 24px; }
+  .compare .block { flex: 1; border-radius: 2px; padding: 18px 20px; }
+  .compare .block.before { background: #f6eeee; border-left: 3px solid #b0413e; }
+  .compare .block.after { background: #eef4f6; border-left: 3px solid var(--blue); }
+  .compare .block h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--navy); }
+  .compare .block p { font-size: 0.88rem; color: var(--text-mute); line-height: 1.6; }
+
+  footer.progress {
+    position: fixed; bottom: 26px; left: 100px; right: 100px;
+    display: flex; align-items: center; gap: 12px; z-index: 10;
+  }
+  .slide.title ~ footer.progress, .slide:not(.active) ~ footer.progress {}
+  footer.progress .num { font-size: 0.8rem; color: var(--text-mute); min-width: 50px; }
+  footer.progress .track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  footer.progress .fill { height: 100%; background: var(--blue); transition: width 0.25s ease; }
+
+  .nav-btn {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.9); border: 1px solid var(--border); color: var(--navy);
+    width: 40px; height: 40px; border-radius: 2px; cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center; z-index: 20;
+  }
+  .nav-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .nav-btn.prev { left: 24px; }
+  .nav-btn.next { right: 24px; }
+
+  .slide-tag {
+    position: fixed; top: 26px; right: 100px; font-size: 0.78rem; color: var(--text-mute); z-index: 10;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- 1. 표지 -->
+  <section class="slide title active">
+    <p class="eyebrow">제안 발표</p>
+    <h1>장애인 맞춤 구직 서비스</h1>
+    <p class="lead">장애 유형별 조건과 편의지원 정보를 함께 제공하는<br>구직 정보 서비스 기획안</p>
+    <div class="meta">발표자 · 장나경</div>
+  </section>
+
+  <!-- 2. 문제 정의 -->
+  <section class="slide">
+    <p class="eyebrow">문제 정의</p>
+    <h2>기존 구직 정보는 "중증 / 경증"으로만 분류됩니다</h2>
+    <p class="lead">장애 정도만으로는 실제로 어떤 업무 환경이 필요한지 알기 어렵습니다. 시각장애인과 청각장애인이 필요로 하는 근무 조건은 서로 다릅니다.</p>
+    <div class="compare">
+      <div class="block before">
+        <h4>기존 방식</h4>
+        <p>장애 정도(중증/경증) 기준으로만 공고를 필터링<br>장애 유형별 적합도를 확인할 방법이 없음</p>
+      </div>
+      <div class="block after">
+        <h4>필요한 방식</h4>
+        <p>장애 유형(시각·청각·지체·발달·뇌병변)별로 조건 설정<br>기업이 제공하는 편의지원 항목까지 함께 확인</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 해결 방안 -->
+  <section class="slide">
+    <p class="eyebrow">해결 방안</p>
+    <h2>장애 유형 · 정도 · 근무 형태를 조합한 필터</h2>
+    <div class="cols">
+      <div class="col">
+        <h3>제공 정보</h3>
+        <ul class="plain">
+          <li>장애 유형별 지원 가능 여부</li>
+          <li>장애 정도(경증/중증) 조건</li>
+          <li>근무 형태(재택/출근)</li>
+          <li>기업이 제공하는 편의지원 항목</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>기대 효과</h3>
+        <ul class="plain">
+          <li>본인 조건에 맞는 일자리를 빠르게 확인</li>
+          <li>지원 전 편의지원 여부를 미리 파악</li>
+          <li>불필요한 지원·탈락 과정 감소</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 주요 기능: 필터 UI -->
+  <section class="slide">
+    <p class="eyebrow">주요 기능</p>
+    <h2>조건 선택 필터</h2>
+    <div class="cols">
+      <div class="col">
+        <h3>장애 유형 (중복 선택)</h3>
+        <div class="mock-check on"><span class="mock-box on"></span>시각</div>
+        <div class="mock-check"><span class="mock-box"></span>청각</div>
+        <div class="mock-check on"><span class="mock-box on"></span>지체</div>
+        <div class="mock-check"><span class="mock-box"></span>발달</div>
+        <div class="mock-check"><span class="mock-box"></span>뇌병변</div>
+        <p style="font-size:0.85rem; color:var(--text-mute); margin-top:14px;">여러 유형을 함께 선택할 수 있습니다.</p>
+      </div>
+      <div class="col">
+        <h3>장애 정도 / 근무 형태</h3>
+        <div class="mock-check on"><span class="mock-box on"></span>전체</div>
+        <div class="mock-check"><span class="mock-box"></span>경증</div>
+        <div class="mock-check"><span class="mock-box"></span>중증</div>
+        <p style="font-size:0.85rem; color:var(--text-mute); margin-top:14px;">단일 조건으로 선택합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 필터링 로직 -->
+  <section class="slide">
+    <p class="eyebrow">필터링 로직</p>
+    <h2>선택한 유형을 모두 지원하는 일자리만 표시</h2>
+    <p class="lead">장애 유형을 여러 개 선택하면, 그중 하나라도 겹치는 일자리가 아니라 <b>선택한 유형을 전부 지원하는 일자리만</b> 결과에 남습니다.</p>
+    <div class="flow">
+      <div class="step">시각 + 지체 선택</div>
+      <span class="arrow">→</span>
+      <div class="step">두 조건을 모두 지원하는 공고만 필터링</div>
+      <span class="arrow">→</span>
+      <div class="step">조건에 맞는 일자리만 결과에 표시</div>
+    </div>
+  </section>
+
+  <!-- 6. 일자리 카드 예시 -->
+  <section class="slide">
+    <p class="eyebrow">화면 구성</p>
+    <h2>일자리 카드 예시</h2>
+    <div class="job-mock">
+      <h4>웹 접근성 테스터</h4>
+      <p class="meta">제주IT센터 · 재택근무 · 월 220만원</p>
+      <div>
+        <span class="tag type">시각장애 지원가능</span>
+        <span class="tag type">지체장애 지원가능</span>
+        <span class="tag type">뇌병변장애 지원가능</span>
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag support">스크린리더 지원</span>
+        <span class="tag support">재택근무</span>
+        <span class="tag support">유연근무제</span>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:22px;">지원 가능한 장애 유형과 실제 편의지원 항목을 하나의 카드에서 함께 확인할 수 있습니다.</p>
+  </section>
+
+  <!-- 7. 마무리 -->
+  <section class="slide">
+    <p class="eyebrow">향후 계획</p>
+    <h2>다음 단계</h2>
+    <ul class="plain" style="font-size:1.1rem; line-height:2;">
+      <li>실제 채용 공고 데이터 연동</li>
+      <li>기업별 편의지원 정보 검증 절차 마련</li>
+      <li>사용자 피드백 기반 필터 항목 보완</li>
+    </ul>
+  </section>
+
+</div>
+
+<button class="nav-btn prev" id="prevBtn" aria-label="이전 슬라이드">‹</button>
+<button class="nav-btn next" id="nextBtn" aria-label="다음 슬라이드">›</button>
+<span class="slide-tag" id="slideTag"></span>
+
+<footer class="progress">
+  <span class="num" id="slideNum">1 / 8</span>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</footer>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  function show(idx) {
+    if (idx < 0 || idx >= total) return;
+    slides[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    document.getElementById('slideNum').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('fill').style.width = ((current + 1) / total * 100) + '%';
+    document.getElementById('prevBtn').style.visibility = current === 0 ? 'hidden' : 'visible';
+    document.getElementById('nextBtn').style.visibility = current === total - 1 ? 'hidden' : 'visible';
+  }
+
+  document.getElementById('prevBtn').onclick = function () { show(current - 1); };
+  document.getElementById('nextBtn').onclick = function () { show(current + 1); };
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') show(current + 1);
+    if (e.key === 'ArrowLeft') show(current - 1);
+  });
+
+  show(0);
+</script>
+
+</body>
+</html>
