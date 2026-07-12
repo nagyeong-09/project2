@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> 장애인 맞춤 구직서비스 - 장나경</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Malgun Gothic', sans-serif; background: #f4f6f7; color: #263238; }
+  header { background: #24384a; color: #fff; padding: 28px 20px; border-bottom: 3px solid #2f6690; }
+  .header-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  header h1 { font-size: 1.35rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  header p { font-size: 0.88rem; line-height: 1.6; color: #c3d2d9; }
+  .container { max-width: 800px; margin: 30px auto; padding: 0 16px; }
+  .box { background: #fff; border: 1px solid #dde3e5; border-radius: 4px; padding: 24px; margin-bottom: 20px; }
+  .box h2 { font-size: 1.05rem; margin-bottom: 16px; color: #2f6690; font-weight: 700; border-bottom: 2px solid #e5ebec; padding-bottom: 10px; }
+  .why { background: #eff4f5; border-left: 3px solid #2f6690; border-radius: 2px; padding: 16px; font-size: 0.9rem; line-height: 1.7; color: #3e4c50; }
+  /* 필터 */
+  .filter-group { margin-bottom: 16px; }
+  .filter-group .label { font-weight: bold; font-size: 0.92rem; margin-bottom: 8px; display: block; color: #37474f; }
+  .check-list { display: flex; flex-direction: row; flex-wrap: wrap; gap: 4px 20px; }
+  .check-item { display: flex; align-items: center; gap: 10px; padding: 7px 4px; cursor: pointer; font-size: 0.92rem; color: #455a64; user-select: none; }
+  .check-item:hover .check-box { border-color: #2f6690; }
+  .check-box { width: 18px; height: 18px; flex-shrink: 0; border: 2px solid #b0bec5; border-radius: 3px; background: #fff; transition: background 0.15s, border-color 0.15s; }
+  .check-item.active { color: #24384a; font-weight: 700; }
+  .check-item.active .check-box { background: #2f6690; border-color: #2f6690; }
+  /* 일자리 카드 */
+  .job-card { border: 1px solid #dde3e5; border-left: 3px solid #2f6690; border-radius: 2px; padding: 18px; margin-bottom: 12px; }
+  .job-card h3 { font-size: 1.05rem; margin-bottom: 6px; color: #263238; }
+  .job-card .meta { font-size: 0.85rem; color: #66787c; margin-bottom: 10px; }
+  .job-card .pay { font-weight: bold; color: #2f6690; }
+  .tag { display: inline-block; font-size: 0.74rem; padding: 3px 9px; border-radius: 3px; margin: 2px 4px 2px 0; }
+  .tag.type { background: #e3edee; color: #2f6690; border: 1px solid #c7dadc; }
+  .tag.support { background: #eef3ea; color: #4c6b3a; border: 1px solid #d6e3cd; }
+  .empty-msg { text-align: center; color: #90a4ae; padding: 20px 0; line-height: 1.7; }
+  .count-msg { font-size: 0.88rem; color: #78909c; margin-bottom: 12px; }
+  .back { display: block; text-align: center; margin: 30px 0; color: #2f6690; text-decoration: none; font-weight: 600; }
+  .back:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>장애인 맞춤 구직 서비스</h1>
+    <p>장애 유형과 정도, 근무 형태별 조건에 맞는 일자리 정보를 제공합니다.<br>필요한 편의지원 항목도 함께 확인하실 수 있습니다.</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- 필터 -->
+  <div class="box">
+    <h2>나에게 맞는 조건 선택</h2>
+    <div class="filter-group">
+      <span class="label">장애 유형</span>
+      <div class="check-list" id="typeChips">
+        <div class="check-item active" data-value="전체"><span class="check-box"></span>전체</div>
+        <div class="check-item" data-value="시각"><span class="check-box"></span>시각</div>
+        <div class="check-item" data-value="청각"><span class="check-box"></span>청각</div>
+        <div class="check-item" data-value="지체"><span class="check-box"></span>지체</div>
+        <div class="check-item" data-value="발달"><span class="check-box"></span>발달</div>
+        <div class="check-item" data-value="뇌병변"><span class="check-box"></span>뇌병변</div>
+      </div>
+    </div>
+    <div class="filter-group">
+      <span class="label">장애 정도</span>
+      <div class="check-list" id="levelChips">
+        <div class="check-item active" data-value="전체"><span class="check-box"></span>전체</div>
+        <div class="check-item" data-value="경증"><span class="check-box"></span>경증</div>
+        <div class="check-item" data-value="중증"><span class="check-box"></span>중증</div>
+      </div>
+    </div>
+    <div class="filter-group">
+      <span class="label">근무 형태</span>
+      <div class="check-list" id="workChips">
+        <div class="check-item active" data-value="전체"><span class="check-box"></span>전체</div>
+        <div class="check-item" data-value="재택"><span class="check-box"></span>재택근무</div>
+        <div class="check-item" data-value="출근"><span class="check-box"></span>출근</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 일자리 목록 -->
+  <div class="box">
+    <h2>맞춤 일자리</h2>
+    <p class="count-msg" id="countMsg"></p>
+    <div id="jobList"></div>
+  </div>
+
+  <a class="back" href="../index.html">← 전체 프로젝트 목록으로</a>
+</div>
+
+<script>
+// ==========================================================
+// 일자리 데이터 (예시)
+// types: 이 일자리에 지원 가능한 장애 유형 목록
+// levels: 지원 가능한 장애 정도
+// work: 근무 형태 ("재택" 또는 "출근")
+// supports: 회사가 제공하는 편의지원
+// ==========================================================
+const jobs = [
+  {
+    title: "웹 접근성 테스터", company: "제주IT센터", pay: "월 220만원", work: "재택",
+    types: ["시각", "지체", "뇌병변"], levels: ["경증", "중증"],
+    supports: ["스크린리더 지원", "재택근무", "유연근무제"],
+  },
+  {
+    title: "데이터 라벨링 (이미지 분류)", company: "한라데이터", pay: "월 200만원", work: "재택",
+    types: ["청각", "지체", "발달"], levels: ["경증", "중증"],
+    supports: ["재택근무", "문자 소통 가능", "업무 매뉴얼 제공"],
+  },
+  {
+    title: "카페 바리스타", company: "꿈앤카페 제주점", pay: "시급 10,320원", work: "출근",
+    types: ["청각", "발달"], levels: ["경증"],
+    supports: ["직무지도원 배치", "수어 가능 매니저", "단순화된 주문 시스템"],
+  },
+  {
+    title: "사무 보조 (문서 스캔·정리)", company: "제주도청 산하기관", pay: "월 210만원", work: "출근",
+    types: ["청각", "지체", "발달"], levels: ["경증", "중증"],
+    supports: ["휠체어 접근 가능", "엘리베이터", "장애인 화장실", "주차 지원"],
+  },
+  {
+    title: "안마사", company: "제주헬스케어센터", pay: "월 250만원", work: "출근",
+    types: ["시각"], levels: ["경증", "중증"],
+    supports: ["점자 안내", "안내견 동반 가능", "음성 안내 시스템"],
+  },
+  {
+    title: "온라인 고객 상담 (채팅)", company: "탐라쇼핑", pay: "월 230만원", work: "재택",
+    types: ["청각", "지체", "뇌병변"], levels: ["경증", "중증"],
+    supports: ["재택근무", "채팅 상담만 담당", "장비 지원"],
+  },
+  {
+    title: "제과제빵 보조", company: "오븐하우스", pay: "시급 10,500원", work: "출근",
+    types: ["발달", "청각"], levels: ["경증"],
+    supports: ["직무지도원 배치", "반복 작업 중심", "그림 매뉴얼"],
+  },
+  {
+    title: "콜센터 상담원 (음성)", company: "제주텔레콤", pay: "월 240만원", work: "재택",
+    types: ["시각", "지체"], levels: ["경증", "중증"],
+    supports: ["재택근무", "화면확대 프로그램", "음성지원 소프트웨어"],
+  },
+];
+
+// 현재 선택된 필터 값
+let selectedTypes = new Set(); // 비어있으면 "전체"
+let selectedLevel = "전체";
+let selectedWork = "전체";
+
+// ==========================================================
+// 장애 유형: 중복 선택(체크박스) 가능. 다시 클릭하면 선택 해제됨.
+// ==========================================================
+function setupTypeChips(groupId) {
+  const group = document.getElementById(groupId);
+  const items = group.querySelectorAll(".check-item");
+  const allItem = group.querySelector('[data-value="전체"]');
+
+  items.forEach(function (item) {
+    item.onclick = function () {
+      const val = item.dataset.value;
+
+      if (val === "전체") {
+        selectedTypes.clear();
+        items.forEach(function (i) { i.classList.remove("active"); });
+        allItem.classList.add("active");
+      } else {
+        if (item.classList.contains("active")) {
+          // 이미 선택된 항목을 다시 클릭 -> 선택 해제
+          item.classList.remove("active");
+          selectedTypes.delete(val);
+        } else {
+          item.classList.add("active");
+          selectedTypes.add(val);
+        }
+        // 하나라도 개별 선택되어 있으면 "전체"는 꺼짐, 아무것도 없으면 "전체" 다시 켜짐
+        allItem.classList.toggle("active", selectedTypes.size === 0);
+      }
+
+      renderJobs();
+    };
+  });
+}
+
+// ==========================================================
+// 장애 정도 / 근무 형태: 단일 선택 (클릭하면 active 표시 바꾸고 목록 다시 그리기)
+// ==========================================================
+function setupChips(groupId, callback) {
+  const group = document.getElementById(groupId);
+  const chips = group.querySelectorAll(".check-item");
+  chips.forEach(function (chip) {
+    chip.onclick = function () {
+      chips.forEach(function (c) { c.classList.remove("active"); });
+      chip.classList.add("active");
+      callback(chip.dataset.value);
+      renderJobs();
+    };
+  });
+}
+
+setupTypeChips("typeChips");
+setupChips("levelChips", function (v) { selectedLevel = v; });
+setupChips("workChips", function (v) { selectedWork = v; });
+
+// ==========================================================
+// 필터에 맞는 일자리 목록 그리기
+// ==========================================================
+function renderJobs() {
+  const listEl = document.getElementById("jobList");
+
+  const filtered = jobs.filter(function (job) {
+    const typeOk = (selectedTypes.size === 0) || Array.from(selectedTypes).every(function (t) { return job.types.includes(t); });
+    const levelOk = (selectedLevel === "전체") || job.levels.includes(selectedLevel);
+    const workOk = (selectedWork === "전체") || (job.work === selectedWork);
+    return typeOk && levelOk && workOk;
+  });
+
+  document.getElementById("countMsg").textContent =
+    `조건에 맞는 일자리 ${filtered.length}건을 찾았습니다.`;
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<p class="empty-msg">조건에 맞는 일자리가 없습니다<br>필터를 바꿔서 다시 찾아보세요.</p>`;
+    return;
+  }
+
+  listEl.innerHTML = "";
+  filtered.forEach(function (job) {
+    // 장애 유형 태그
+    let typeTags = "";
+    job.types.forEach(function (t) { typeTags += `<span class="tag type">${t}장애 지원가능</span>`; });
+
+    // 편의지원 태그
+    let supportTags = "";
+    job.supports.forEach(function (s) { supportTags += `<span class="tag support">✓ ${s}</span>`; });
+
+    listEl.innerHTML += `
+      <div class="job-card">
+        <h3>${job.title}</h3>
+        <p class="meta">${job.company} · ${job.work === "재택" ? "재택근무" : "출근"} · <span class="pay">${job.pay}</span></p>
+        <div>${typeTags}</div>
+        <div style="margin-top:6px;">${supportTags}</div>
+      </div>`;
+  });
+}
+
+// 페이지가 열리면 전체 목록 보여주기
+renderJobs();
+</script>
+
+</body>
+</html>
